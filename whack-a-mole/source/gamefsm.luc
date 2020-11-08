@@ -1,0 +1,74 @@
+module gamefsm (
+    input clk,  // clock
+    input rst, // reset
+    output io_seg [8],      // 7-segment LEDs on IO Shield
+    output io_sel [4],     // Digit select on IO Shield
+  
+    input b1_press,
+    input b2_press,
+    input b3_press    
+    //output b1_light,
+    //output b2_light,
+    //output b3_light    
+    ) {
+
+  
+  sig a[3];
+  sig b[3];
+  sig alufn[6];    
+  sig alu[16];
+  alu alumod; 
+  .clk(clk) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+  
+    .rst(rst){
+  
+        dff store_a[3];   // a is test case input, to retrieve from memory unit
+      dff store_b[3];   //b is user input 
+      dff store_alufn[6]; //do i even need to store alufn into mem unit? i think not
+      fsm state = {IDLE, CASE1, CASE2 };
+      stateCounter stateCOUNT;
+      multi_seven_seg seg;  //using module multi_seven_seg
+
+    }
+  }
+  always {
+    io_seg = ~seg.seg;
+    io_sel = ~seg.sel;
+    seg.values = {4h0,4h0}; //initial score
+    
+    a=0; //test case 0 at start
+    
+    //a is supplied in each test case, b is user inputs from b1_press, b2_press, b3_press, etc from au_top
+    b[2] = b1_press;
+    b[1] = b2_press;
+    b[0] = b3_press;
+    
+    alufn=0;
+    alumod.alufn = alufn;
+    alumod.a = a;          //put the test case into the alu input a      
+    alumod.b = b;          //put user inputs into alu input b  
+      case (state.q){                 //initial start state of finite state machine
+    
+      state.IDLE:
+        //placeholder logic
+        if(stateCOUNT.inc_state==1) seg.values={4h0,4h1};
+        
+        /*
+        //logic to check if input presses b matches test cases a, must use alu accordingly 
+        if(somebuttonpress && stateCOUNT.inc_state == 1){     
+           state.d = state.CASE1;          
+        }
+      */  
+      state.CASE1:                   
+      //placeholder logic
+        if(stateCOUNT.inc_state==1) seg.values={4h0,4h1};
+        
+        /*
+        // more state logic to check if input presses b matches test cases a
+        if(){ 
+        } */
+        
+     } //encapsulate case(state.q)
+  }
