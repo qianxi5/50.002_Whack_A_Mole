@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/Carey/Desktop/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.runs/synth_1'
+HD_PWD='C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

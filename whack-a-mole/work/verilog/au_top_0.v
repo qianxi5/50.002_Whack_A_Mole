@@ -27,30 +27,45 @@ module au_top_0 (
   
   reg rst;
   
+  wire [8-1:0] M_gameFsmInstance_io_seg;
+  wire [4-1:0] M_gameFsmInstance_io_sel;
+  reg [1-1:0] M_gameFsmInstance_b1_press;
+  reg [1-1:0] M_gameFsmInstance_b2_press;
+  reg [1-1:0] M_gameFsmInstance_b3_press;
+  gamefsm_1 gameFsmInstance (
+    .clk(clk),
+    .rst(rst),
+    .b1_press(M_gameFsmInstance_b1_press),
+    .b2_press(M_gameFsmInstance_b2_press),
+    .b3_press(M_gameFsmInstance_b3_press),
+    .io_seg(M_gameFsmInstance_io_seg),
+    .io_sel(M_gameFsmInstance_io_sel)
+  );
+  
   wire [1-1:0] M_reset_cond_out;
   reg [1-1:0] M_reset_cond_in;
-  reset_conditioner_1 reset_cond (
+  reset_conditioner_2 reset_cond (
     .clk(clk),
     .in(M_reset_cond_in),
     .out(M_reset_cond_out)
   );
   wire [1-1:0] M_b1_press_cond_out;
   reg [1-1:0] M_b1_press_cond_in;
-  button_conditioner_2 b1_press_cond (
+  button_conditioner_3 b1_press_cond (
     .clk(clk),
     .in(M_b1_press_cond_in),
     .out(M_b1_press_cond_out)
   );
   wire [1-1:0] M_b2_press_cond_out;
   reg [1-1:0] M_b2_press_cond_in;
-  button_conditioner_2 b2_press_cond (
+  button_conditioner_3 b2_press_cond (
     .clk(clk),
     .in(M_b2_press_cond_in),
     .out(M_b2_press_cond_out)
   );
   wire [1-1:0] M_b3_press_cond_out;
   reg [1-1:0] M_b3_press_cond_in;
-  button_conditioner_2 b3_press_cond (
+  button_conditioner_3 b3_press_cond (
     .clk(clk),
     .in(M_b3_press_cond_in),
     .out(M_b3_press_cond_out)
@@ -58,7 +73,7 @@ module au_top_0 (
   
   wire [1-1:0] M_buttondetector1_out;
   reg [1-1:0] M_buttondetector1_in;
-  edge_detector_3 buttondetector1 (
+  edge_detector_4 buttondetector1 (
     .clk(clk),
     .in(M_buttondetector1_in),
     .out(M_buttondetector1_out)
@@ -66,7 +81,7 @@ module au_top_0 (
   
   wire [1-1:0] M_buttondetector2_out;
   reg [1-1:0] M_buttondetector2_in;
-  edge_detector_3 buttondetector2 (
+  edge_detector_4 buttondetector2 (
     .clk(clk),
     .in(M_buttondetector2_in),
     .out(M_buttondetector2_out)
@@ -74,7 +89,7 @@ module au_top_0 (
   
   wire [1-1:0] M_buttondetector3_out;
   reg [1-1:0] M_buttondetector3_in;
-  edge_detector_3 buttondetector3 (
+  edge_detector_4 buttondetector3 (
     .clk(clk),
     .in(M_buttondetector3_in),
     .out(M_buttondetector3_out)
@@ -86,17 +101,20 @@ module au_top_0 (
     usb_tx = usb_rx;
     led = 8'h00;
     io_led = 24'h000000;
-    io_seg = 8'hff;
-    io_sel = 4'hf;
+    io_seg = M_gameFsmInstance_io_seg;
+    io_sel = M_gameFsmInstance_io_sel;
     M_b1_press_cond_in = b1_press;
     M_b2_press_cond_in = b2_press;
     M_b3_press_cond_in = b3_press;
     M_buttondetector1_in = M_b1_press_cond_out;
     M_buttondetector2_in = M_b2_press_cond_out;
     M_buttondetector3_in = M_b3_press_cond_out;
-    b1_light = b1_press;
+    b1_light = M_buttondetector1_out;
     b2_light = 1'h0;
     b3_light = 1'h1;
+    M_gameFsmInstance_b1_press = M_buttondetector1_out;
+    M_gameFsmInstance_b2_press = M_buttondetector2_out;
+    M_gameFsmInstance_b3_press = M_buttondetector3_out;
     io_led[0+0+0-:1] = M_buttondetector1_out;
     io_led[0+2+0-:1] = M_buttondetector2_out;
     io_led[0+4+0-:1] = M_buttondetector3_out;

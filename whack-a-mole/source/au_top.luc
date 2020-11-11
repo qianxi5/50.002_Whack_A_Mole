@@ -60,9 +60,12 @@ module au_top (
     b2_light =0;
     b3_light =1;
     
+    gameFsmInstance.b1_press = buttondetector1.out;
+    gameFsmInstance.b2_press = buttondetector2.out;
+    gameFsmInstance.b3_press = buttondetector3.out;
     
-    io_led[0][0]= buttondetector1.out;
-    io_led[0][2]= buttondetector2.out;  
-    io_led[0][4]= buttondetector3.out;
+    io_led[0][0] = buttondetector1.out;
+    io_led[0][2] = buttondetector2.out;  
+    io_led[0][4] = buttondetector3.out;
   }
 }
