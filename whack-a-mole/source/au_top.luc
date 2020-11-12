@@ -9,8 +9,6 @@ module au_top (
     output io_sel [4],      // Digit select on IO Shield
     input io_button [5],    // 5 buttons on IO Shield
    // input io_dip [3][8],    // DIP switches on IO Shield
-    
-
     input b1_press,
     input b2_press,
     input b3_press,    
@@ -30,11 +28,10 @@ module au_top (
     button_conditioner b1_press_cond;
     button_conditioner b2_press_cond;
     button_conditioner b3_press_cond;
+    edge_detector buttondetector1(#RISE(1), #FALL(0)); //detect on rising edge only
+    edge_detector buttondetector2(#RISE(1), #FALL(0)); //detect on rising edge only
+    edge_detector buttondetector3(#RISE(1), #FALL(0)); //detect on rising edge only
   }
-  
-//    edge_detector buttondetector1(#RISE(1), #FALL(0),.clk(clk)); //detect on rising edge only
-//    edge_detector buttondetector2(#RISE(1), #FALL(0),.clk(clk)); //detect on rising edge only
-//    edge_detector buttondetector3(#RISE(1), #FALL(0),.clk(clk)); //detect on rising edge only
   always {
     reset_cond.in = ~rst_n; // input raw inverted reset signal
     rst = reset_cond.out;   // conditioned reset
@@ -45,16 +42,16 @@ module au_top (
     
     io_led = 3x{{8h00}};    // turn LEDs off
     io_seg = gameFsmInstance.io_seg;          // turn segments off
-    io_sel = gameFsmInstance.io_sel;           // select no digits
+    io_sel = gameFsmInstance.io_sel;           //see io_sel in gamefsm.luc
     
     //conditioners. assigning the actual raw inputs from the breakout to the conditioners
     b1_press_cond.in = b1_press; 
     b2_press_cond.in = b2_press;
     b3_press_cond.in = b3_press;
     
-//    buttondetector1.in = b1_press_cond.out; 
-//    buttondetector2.in = b2_press_cond.out;
-//    buttondetector3.in = b3_press_cond.out;
+    buttondetector1.in = b1_press_cond.out; 
+    buttondetector2.in = b2_press_cond.out;
+    buttondetector3.in = b3_press_cond.out;
     
     //test case: these 2 lines give a TDO
     //b1_light = b1_press; //directly take the output of the b1_press without conditioning, see group report for why.
@@ -64,7 +61,7 @@ module au_top (
     b1_light = 1;
     b2_light = 0;
     b3_light = 1;
-    
+        
     //b1_light = b2_press_cond.out;
     //b2_light = b2_press_cond.out;    
     //b3_light = b2_press_cond.out;   //take the output of the button condition instead of the output of the button detector  
@@ -88,12 +85,13 @@ module au_top (
     /*test case: nothing wrong with the edge detector. even if we just take the output of the button conditioner, 
     the inputs into the io_leds are still high even without button presses. 
        */
-    io_led[0][0] = b1_press_cond.out;
-    io_led[0][2] = b2_press_cond.out;  
-    io_led[0][4] = b3_press_cond.out;
+//    io_led[0][0] = b1_press_cond.out;
+//    io_led[0][2] = b2_press_cond.out;  
+//    io_led[0][4] = b3_press_cond.out;
     
-//    io_led[0][0] = buttondetector1.out;
-//    io_led[0][2] = buttondetector2.out;  
-//    io_led[0][4] = buttondetector3.out;
+    
+    io_led[0][0] = buttondetector1.out;
+    io_led[0][2] = buttondetector2.out;  
+    io_led[0][4] = buttondetector3.out;
   }
 }

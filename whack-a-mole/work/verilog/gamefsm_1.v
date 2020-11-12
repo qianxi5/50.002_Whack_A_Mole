@@ -26,7 +26,7 @@ module gamefsm_1 (
   
   reg [1:0] M_state_d, M_state_q = IDLE_state;
   wire [1-1:0] M_stateCOUNT_inc_state;
-  stateCounter_4 stateCOUNT (
+  stateCounter_5 stateCOUNT (
     .clk(clk),
     .rst(rst),
     .inc_state(M_stateCOUNT_inc_state)
@@ -34,7 +34,7 @@ module gamefsm_1 (
   wire [7-1:0] M_seg_seg;
   wire [2-1:0] M_seg_sel;
   reg [8-1:0] M_seg_values;
-  multi_seven_seg_5 seg (
+  multi_seven_seg_6 seg (
     .clk(clk),
     .rst(rst),
     .values(M_seg_values),

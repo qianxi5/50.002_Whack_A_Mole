@@ -85,14 +85,15 @@ OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
   C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/button_conditioner_3.v
-  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/counter_7.v
-  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/decoder_9.v
+  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/counter_8.v
+  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/decoder_10.v
+  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/edge_detector_4.v
   C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/gamefsm_1.v
-  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/multi_seven_seg_5.v
-  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/pipeline_6.v
+  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/multi_seven_seg_6.v
+  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/pipeline_7.v
   C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/reset_conditioner_2.v
-  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/seven_seg_8.v
-  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/stateCounter_4.v
+  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/seven_seg_9.v
+  C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/stateCounter_5.v
   C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/au_top_0.v
 }
 OPTRACE "Adding files" END { }
