@@ -8,7 +8,7 @@
    Parameters:
      WIDTH = DIGIT_BITS
 */
-module decoder_15 (
+module decoder_9 (
     input [0:0] in,
     output reg [1:0] out
   );

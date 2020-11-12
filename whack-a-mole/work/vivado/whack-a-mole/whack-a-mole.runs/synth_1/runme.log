@@ -17,78 +17,61 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t
 INFO: [Device 21-403] Loading part xc7a35tftg256-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 11652
+INFO: [Synth 8-7075] Helper process launched with PID 15336
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'au_top_0' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/au_top_0.v:7]
 INFO: [Synth 8-6157] synthesizing module 'gamefsm_1' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/gamefsm_1.v:7]
 	Parameter IDLE_state bound to: 2'b00 
 	Parameter CASE1_state bound to: 2'b01 
 	Parameter CASE2_state bound to: 2'b10 
-INFO: [Synth 8-6157] synthesizing module 'alu_5' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/alu_5.v:7]
-INFO: [Synth 8-6157] synthesizing module 'adder_9' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/adder_9.v:7]
-INFO: [Synth 8-226] default block is never used [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/adder_9.v:23]
-INFO: [Synth 8-6155] done synthesizing module 'adder_9' (1#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/adder_9.v:7]
-INFO: [Synth 8-6157] synthesizing module 'compare_10' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/compare_10.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'compare_10' (2#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/compare_10.v:7]
-INFO: [Synth 8-6157] synthesizing module 'boolean_11' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/boolean_11.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'boolean_11' (3#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/boolean_11.v:7]
-INFO: [Synth 8-6157] synthesizing module 'shifter_12' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/shifter_12.v:7]
-INFO: [Synth 8-226] default block is never used [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/shifter_12.v:18]
-INFO: [Synth 8-6155] done synthesizing module 'shifter_12' (4#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/shifter_12.v:7]
-INFO: [Synth 8-226] default block is never used [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/alu_5.v:92]
-INFO: [Synth 8-6155] done synthesizing module 'alu_5' (5#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/alu_5.v:7]
-INFO: [Synth 8-6157] synthesizing module 'stateCounter_6' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/stateCounter_6.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'stateCounter_6' (6#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/stateCounter_6.v:7]
-INFO: [Synth 8-6157] synthesizing module 'multi_seven_seg_7' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/multi_seven_seg_7.v:12]
+INFO: [Synth 8-6157] synthesizing module 'stateCounter_4' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/stateCounter_4.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'stateCounter_4' (1#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/stateCounter_4.v:7]
+INFO: [Synth 8-6157] synthesizing module 'multi_seven_seg_5' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/multi_seven_seg_5.v:12]
 	Parameter DIGITS bound to: 2'b10 
 	Parameter DIV bound to: 5'b10000 
 	Parameter DIGIT_BITS bound to: 1'b1 
-INFO: [Synth 8-6157] synthesizing module 'counter_13' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/counter_13.v:14]
+INFO: [Synth 8-6157] synthesizing module 'counter_7' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/counter_7.v:14]
 	Parameter SIZE bound to: 1'b1 
 	Parameter DIV bound to: 5'b10000 
 	Parameter TOP bound to: 3'b001 
 	Parameter UP bound to: 1'b1 
 	Parameter MAX_VALUE bound to: 19'b0011111111111111111 
-INFO: [Synth 8-6155] done synthesizing module 'counter_13' (7#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/counter_13.v:14]
-INFO: [Synth 8-6157] synthesizing module 'seven_seg_14' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/seven_seg_14.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'seven_seg_14' (8#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/seven_seg_14.v:7]
-INFO: [Synth 8-6157] synthesizing module 'decoder_15' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/decoder_15.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'counter_7' (2#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/counter_7.v:14]
+INFO: [Synth 8-6157] synthesizing module 'seven_seg_8' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/seven_seg_8.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'seven_seg_8' (3#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/seven_seg_8.v:7]
+INFO: [Synth 8-6157] synthesizing module 'decoder_9' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/decoder_9.v:11]
 	Parameter WIDTH bound to: 1'b1 
-INFO: [Synth 8-6155] done synthesizing module 'decoder_15' (9#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/decoder_15.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'multi_seven_seg_7' (10#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/multi_seven_seg_7.v:12]
-INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/gamefsm_1.v:82]
-INFO: [Synth 8-6155] done synthesizing module 'gamefsm_1' (11#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/gamefsm_1.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'decoder_9' (4#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/decoder_9.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'multi_seven_seg_5' (5#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/multi_seven_seg_5.v:12]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/gamefsm_1.v:54]
+INFO: [Synth 8-6155] done synthesizing module 'gamefsm_1' (6#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/gamefsm_1.v:7]
 INFO: [Synth 8-6157] synthesizing module 'reset_conditioner_2' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/reset_conditioner_2.v:11]
 	Parameter STAGES bound to: 3'b100 
-INFO: [Synth 8-6155] done synthesizing module 'reset_conditioner_2' (12#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/reset_conditioner_2.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'reset_conditioner_2' (7#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/reset_conditioner_2.v:11]
 INFO: [Synth 8-6157] synthesizing module 'button_conditioner_3' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/button_conditioner_3.v:13]
 	Parameter CLK_FREQ bound to: 26'b10111110101111000010000000 
 	Parameter MIN_DELAY bound to: 5'b10100 
 	Parameter NUM_SYNC bound to: 2'b10 
-INFO: [Synth 8-6157] synthesizing module 'pipeline_8' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/pipeline_8.v:11]
+INFO: [Synth 8-6157] synthesizing module 'pipeline_6' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/pipeline_6.v:11]
 	Parameter DEPTH bound to: 2'b10 
-INFO: [Synth 8-6155] done synthesizing module 'pipeline_8' (13#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/pipeline_8.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'button_conditioner_3' (14#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/button_conditioner_3.v:13]
-INFO: [Synth 8-6157] synthesizing module 'edge_detector_4' [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/edge_detector_4.v:12]
-	Parameter RISE bound to: 1'b1 
-	Parameter FALL bound to: 1'b0 
-INFO: [Synth 8-6155] done synthesizing module 'edge_detector_4' (15#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/edge_detector_4.v:12]
-INFO: [Synth 8-6155] done synthesizing module 'au_top_0' (16#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/au_top_0.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'pipeline_6' (8#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/pipeline_6.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'button_conditioner_3' (9#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/button_conditioner_3.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'au_top_0' (10#1) [C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.srcs/sources_1/imports/verilog/au_top_0.v:7]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1013.688 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -106,29 +89,29 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/au_top_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1013.688 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tftg256-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -137,22 +120,15 @@ Detailed RTL Component Info :
 +---Adders : 
 	   2 Input   28 Bit       Adders := 1     
 	   2 Input   17 Bit       Adders := 1     
-	   3 Input   16 Bit       Adders := 1     
-	   2 Input   16 Bit       Adders := 1     
-+---XORs : 
-	   2 Input      1 Bit         XORs := 16    
 +---Registers : 
 	               28 Bit    Registers := 1     
 	               17 Bit    Registers := 1     
 	                4 Bit    Registers := 1     
 	                2 Bit    Registers := 4     
-	                1 Bit    Registers := 3     
 +---Muxes : 
 	   2 Input   17 Bit        Muxes := 1     
-	   2 Input   16 Bit        Muxes := 1     
-	   4 Input   16 Bit        Muxes := 2     
 	   2 Input    4 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 3     
+	   2 Input    1 Bit        Muxes := 2     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -169,26 +145,26 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-565] redefining clock 'clk_0'
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:31 ; elapsed = 00:00:33 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:32 ; elapsed = 00:00:33 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Timing Optimization : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:32 ; elapsed = 00:00:33 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Technology Mapping : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -206,37 +182,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished IO Insertion : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -256,34 +232,34 @@ Report Cell Usage:
 |2     |CARRY4 |    26|
 |3     |LUT1   |     9|
 |4     |LUT2   |     2|
-|5     |LUT4   |    19|
+|5     |LUT4   |    10|
 |6     |LUT5   |     6|
-|7     |LUT6   |    26|
-|8     |FDRE   |   114|
+|7     |LUT6   |    23|
+|8     |FDRE   |   111|
 |9     |FDSE   |     4|
 |10    |IBUF   |     6|
 |11    |OBUF   |    48|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1013.688 ; gain = 0.000
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:35 . Memory (MB): peak = 1012.578 ; gain = 0.000
-Synthesis Optimization Complete : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:21 ; elapsed = 00:00:28 . Memory (MB): peak = 1013.688 ; gain = 0.000
+Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1013.688 ; gain = 0.000
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1013.688 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 26 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1012.578 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1013.688 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-52 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+37 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:44 ; elapsed = 00:00:49 . Memory (MB): peak = 1012.578 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:36 ; elapsed = 00:00:39 . Memory (MB): peak = 1013.688 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.runs/synth_1/au_top_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file au_top_0_utilization_synth.rpt -pb au_top_0_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Thu Nov 12 12:13:13 2020...
+INFO: [Common 17-206] Exiting Vivado at Thu Nov 12 13:50:22 2020...

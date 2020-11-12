@@ -4,7 +4,7 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module stateCounter_6 (
+module stateCounter_4 (
     input clk,
     input rst,
     output reg inc_state

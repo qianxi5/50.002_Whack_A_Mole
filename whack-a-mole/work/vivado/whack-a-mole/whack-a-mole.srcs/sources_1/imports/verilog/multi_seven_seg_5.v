@@ -9,7 +9,7 @@
      DIGITS = 2
      DIV = 16
 */
-module multi_seven_seg_7 (
+module multi_seven_seg_5 (
     input clk,
     input rst,
     input [7:0] values,
@@ -24,7 +24,7 @@ module multi_seven_seg_7 (
   localparam DIGIT_BITS = 1'h1;
   
   wire [1-1:0] M_ctr_value;
-  counter_13 ctr (
+  counter_7 ctr (
     .clk(clk),
     .rst(rst),
     .value(M_ctr_value)
@@ -32,14 +32,14 @@ module multi_seven_seg_7 (
   
   wire [7-1:0] M_seg_dec_segs;
   reg [4-1:0] M_seg_dec_char;
-  seven_seg_14 seg_dec (
+  seven_seg_8 seg_dec (
     .char(M_seg_dec_char),
     .segs(M_seg_dec_segs)
   );
   
   wire [2-1:0] M_digit_dec_out;
   reg [1-1:0] M_digit_dec_in;
-  decoder_15 digit_dec (
+  decoder_9 digit_dec (
     .in(M_digit_dec_in),
     .out(M_digit_dec_out)
   );
