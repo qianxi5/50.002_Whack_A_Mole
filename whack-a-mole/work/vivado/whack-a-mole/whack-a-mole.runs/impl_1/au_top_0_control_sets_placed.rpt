@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date         : Mon Nov  9 15:11:20 2020
+| Date         : Thu Nov 12 12:13:59 2020
 | Host         : S0ck3tSlash running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file au_top_0_control_sets_placed.rpt
 | Design       : au_top_0
@@ -58,9 +58,9 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               9 |            4 |
+| No           | No                    | No                     |               9 |            8 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              49 |           19 |
+| No           | Yes                   | No                     |              49 |           18 |
 | Yes          | No                    | No                     |               0 |            0 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |              60 |           15 |
@@ -74,11 +74,11 @@ Table of Contents
 |  Clock Signal  |            Enable Signal            |           Set/Reset Signal           | Slice Load Count | Bel Load Count | Bels / Slice |
 +----------------+-------------------------------------+--------------------------------------+------------------+----------------+--------------+
 |  clk_IBUF_BUFG |                                     | reset_cond/M_reset_cond_in           |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG |                                     |                                      |                4 |              9 |         2.25 |
+|  clk_IBUF_BUFG |                                     |                                      |                8 |              9 |         1.13 |
 |  clk_IBUF_BUFG | b1_press_cond/sel                   | b1_press_cond/sync/clear             |                5 |             20 |         4.00 |
 |  clk_IBUF_BUFG | b2_press_cond/M_ctr_q[0]_i_2__0_n_0 | b2_press_cond/sync/M_pipe_q_reg[1]_0 |                5 |             20 |         4.00 |
 |  clk_IBUF_BUFG | b3_press_cond/M_ctr_q[0]_i_2__1_n_0 | b3_press_cond/sync/M_pipe_q_reg[1]_0 |                5 |             20 |         4.00 |
-|  clk_IBUF_BUFG |                                     | reset_cond/Q[0]                      |               17 |             45 |         2.65 |
+|  clk_IBUF_BUFG |                                     | reset_cond/Q[0]                      |               16 |             45 |         2.81 |
 +----------------+-------------------------------------+--------------------------------------+------------------+----------------+--------------+
 
 

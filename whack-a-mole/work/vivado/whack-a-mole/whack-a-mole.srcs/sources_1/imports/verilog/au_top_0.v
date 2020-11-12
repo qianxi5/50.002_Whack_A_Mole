@@ -110,8 +110,8 @@ module au_top_0 (
     M_buttondetector2_in = M_b2_press_cond_out;
     M_buttondetector3_in = M_b3_press_cond_out;
     b1_light = M_buttondetector1_out;
-    b2_light = 1'h0;
-    b3_light = 1'h1;
+    b2_light = M_buttondetector2_out;
+    b3_light = M_buttondetector3_out;
     M_gameFsmInstance_b1_press = M_buttondetector1_out;
     M_gameFsmInstance_b2_press = M_buttondetector2_out;
     M_gameFsmInstance_b3_press = M_buttondetector3_out;
