@@ -53,7 +53,7 @@ module gamefsm (
     
       state.IDLE:
         //placeholder logic
-        if(stateCOUNT.inc_state==1) seg.values={4h0,4h1};
+        if(b1_press) seg.values={4h1,4h0};
         
         /*
         //logic to check if input presses b matches test cases a, must use alu accordingly 

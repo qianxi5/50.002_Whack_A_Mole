@@ -10,8 +10,8 @@
     <component>counter.luc</component>
     <src>alu.luc</src>
     <src>seven_seg.luc</src>
-    <component>decoder.luc</component>
     <src>boolean.luc</src>
+    <component>decoder.luc</component>
     <src>adder.luc</src>
     <src>stateCounter.luc</src>
     <component>reset_conditioner.luc</component>

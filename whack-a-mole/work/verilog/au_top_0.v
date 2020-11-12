@@ -24,6 +24,8 @@ module au_top_0 (
   
   
   
+  reg [2:0] btn_light_intemediate;
+  
   reg rst;
   
   wire [8-1:0] M_gameFsmInstance_io_seg;
@@ -99,20 +101,23 @@ module au_top_0 (
     io_led = 24'h000000;
     io_seg = M_gameFsmInstance_io_seg;
     io_sel = M_gameFsmInstance_io_sel;
-    M_b1_press_cond_in = b1_press;
-    M_b2_press_cond_in = b2_press;
-    M_b3_press_cond_in = b3_press;
+    M_b1_press_cond_in = io_button[0+0-:1];
+    M_b2_press_cond_in = io_button[1+0-:1];
+    M_b3_press_cond_in = io_button[2+0-:1];
     M_buttondetector1_in = M_b1_press_cond_out;
     M_buttondetector2_in = M_b2_press_cond_out;
     M_buttondetector3_in = M_b3_press_cond_out;
     b1_light = 1'h1;
     b2_light = 1'h0;
     b3_light = 1'h1;
-    M_gameFsmInstance_b1_press = 1'h1;
+    M_gameFsmInstance_b1_press = M_buttondetector1_out;
     M_gameFsmInstance_b2_press = 1'h1;
     M_gameFsmInstance_b3_press = 1'h1;
-    io_led[0+0+0-:1] = M_buttondetector1_out;
-    io_led[0+2+0-:1] = M_buttondetector2_out;
-    io_led[0+4+0-:1] = M_buttondetector3_out;
+    btn_light_intemediate[0+0-:1] = M_buttondetector1_out;
+    btn_light_intemediate[1+0-:1] = M_buttondetector2_out;
+    btn_light_intemediate[2+0-:1] = M_buttondetector3_out;
+    io_led[0+0+0-:1] = btn_light_intemediate[0+0-:1];
+    io_led[0+2+0-:1] = btn_light_intemediate[1+0-:1];
+    io_led[0+4+0-:1] = btn_light_intemediate[2+0-:1];
   end
 endmodule

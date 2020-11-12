@@ -5,8 +5,8 @@ module au_top (
     input usb_rx,           // USB->Serial input
     output usb_tx,          // USB->Serial output
     output io_led [3][8],   // LEDs on IO Shield
-    output io_seg [8],      // 7-segment LEDs on IO Shield
-    output io_sel [4],      // Digit select on IO Shield
+//    output io_seg [8],      // 7-segment LEDs on IO Shield
+//    output io_sel [4],      // Digit select on IO Shield
     input io_button [5],    // 5 buttons on IO Shield
    // input io_dip [3][8],    // DIP switches on IO Shield
     input b1_press,
@@ -15,11 +15,10 @@ module au_top (
     output b1_light,
     output b2_light,
     output b3_light
-    
     ) {
-  
+  sig btn_light_intemediate[3];
   sig rst;                  // reset signal
-  gamefsm gameFsmInstance(.clk(clk),.rst(rst));
+//  gamefsm gameFsmInstance(.clk(clk),.rst(rst));
 
     .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
@@ -41,13 +40,19 @@ module au_top (
     led = 8h00;             // turn LEDs off
     
     io_led = 3x{{8h00}};    // turn LEDs off
-    io_seg = gameFsmInstance.io_seg;          // turn segments off
-    io_sel = gameFsmInstance.io_sel;           //see io_sel in gamefsm.luc
+    
+    //io_seg = gameFsmInstance.io_seg;          // turn segments off
+    //io_sel = gameFsmInstance.io_sel;           //see io_sel in gamefsm.luc
+    
+    //testcase: see if io_button works with the way I defined the button conditioners and edge detectors. 
+    b1_press_cond.in = io_button[0]; 
+    b2_press_cond.in = io_button[1];
+    b3_press_cond.in = io_button[2];
     
     //conditioners. assigning the actual raw inputs from the breakout to the conditioners
-    b1_press_cond.in = b1_press; 
-    b2_press_cond.in = b2_press;
-    b3_press_cond.in = b3_press;
+    //b1_press_cond.in = b1_press; 
+    //b2_press_cond.in = b2_press;
+    //b3_press_cond.in = b3_press;
     
     buttondetector1.in = b1_press_cond.out; 
     buttondetector2.in = b2_press_cond.out;
@@ -71,9 +76,9 @@ module au_top (
     //    b2_light = buttondetector2.out;
     //    b3_light = buttondetector3.out;
     
-    gameFsmInstance.b1_press = 1;
-    gameFsmInstance.b2_press = 1;
-    gameFsmInstance.b3_press = 1;
+//    gameFsmInstance.b1_press = buttondetector1.out;
+//    gameFsmInstance.b2_press = buttondetector2.out;
+//    gameFsmInstance.b3_press = buttondetector3.out;
     
     
 //    gameFsmInstance.b1_press = buttondetector1.out;
@@ -88,6 +93,14 @@ module au_top (
 //    io_led[0][0] = b1_press_cond.out;
 //    io_led[0][2] = b2_press_cond.out;  
 //    io_led[0][4] = b3_press_cond.out;
+    
+    //test case: use intermediate output signals before sending to some display
+    //btn_light_intemediate[0] = buttondetector1.out;
+    //btn_light_intemediate[1] = buttondetector2.out;
+    //btn_light_intemediate[2] = buttondetector3.out;
+    //io_led[0][0] = btn_light_intemediate[0];
+    //io_led[0][2] = btn_light_intemediate[1];  
+    //io_led[0][4] = btn_light_intemediate[2];
     
     
     io_led[0][0] = buttondetector1.out;

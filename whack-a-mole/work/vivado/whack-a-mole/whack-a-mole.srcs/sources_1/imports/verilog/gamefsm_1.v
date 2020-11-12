@@ -53,8 +53,8 @@ module gamefsm_1 (
     
     case (M_state_q)
       IDLE_state: begin
-        if (M_stateCOUNT_inc_state == 1'h1) begin
-          M_seg_values = 8'h01;
+        if (b1_press) begin
+          M_seg_values = 8'h10;
         end
       end
       CASE1_state: begin
