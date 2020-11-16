@@ -2,8 +2,8 @@
 # Vivado v2020.1 (64-bit)
 # SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
 # IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
-# Start of session at: Thu Nov 12 17:20:32 2020
-# Process ID: 9328
+# Start of session at: Mon Nov 16 23:25:11 2020
+# Process ID: 1400
 # Current directory: C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.runs/impl_1
 # Command line: vivado.exe -log au_top_0.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source au_top_0.tcl -notrace
 # Log file: C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/vivado/whack-a-mole/whack-a-mole.runs/impl_1/au_top_0.vdi

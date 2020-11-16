@@ -11,7 +11,8 @@ module gamefsm_1 (
     output reg [3:0] io_sel,
     input b1_press,
     input b2_press,
-    input b3_press
+    input b3_press,
+    output reg [2:0] io_led
   );
   
   
@@ -43,6 +44,8 @@ module gamefsm_1 (
   );
   
   always @* begin
+    M_state_d = M_state_q;
+    
     io_seg = ~M_seg_seg;
     io_sel = ~M_seg_sel;
     M_seg_values = 8'h00;
@@ -50,12 +53,26 @@ module gamefsm_1 (
     b[2+0-:1] = b1_press;
     b[1+0-:1] = b2_press;
     b[0+0-:1] = b3_press;
+    io_led = 1'h0;
     
     case (M_state_q)
       IDLE_state: begin
+        M_seg_values = 8'h11;
         if (b1_press) begin
-          M_seg_values = 8'h10;
+          M_seg_values = 8'h12;
+          io_led[0+0-:1] = 1'h1;
+        end else begin
+          if (b2_press) begin
+            io_led[1+0-:1] = 1'h1;
+            M_seg_values = 8'h13;
+          end else begin
+            if (b3_press) begin
+              io_led[2+0-:1] = 1'h1;
+              M_seg_values = 8'h14;
+            end
+          end
         end
+        M_state_d = IDLE_state;
       end
       CASE1_state: begin
         if (M_stateCOUNT_inc_state == 1'h1) begin
@@ -66,11 +83,7 @@ module gamefsm_1 (
   end
   
   always @(posedge clk) begin
-    if (rst == 1'b1) begin
-      M_state_q <= 1'h0;
-    end else begin
-      M_state_q <= M_state_d;
-    end
+    M_state_q <= M_state_d;
   end
   
 endmodule
