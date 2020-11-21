@@ -22,6 +22,12 @@ module gamefsm (
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
     fsm state = {IDLE, CASE1, CASE2 };
+    
+    //there's no point creating a separate memory unit luc source file since it is very small, and no logic for retrieving data. 
+    dff store_b1_press[16];      //delay flip flops used for storing values of a,b,store_alufn
+    dff store_b2_press[16];
+    dff store_b3_press[16];
+    dff store_test_cases[16];
     .rst(rst){
   
      //  dff store_a[3];   // a is test case input, to retrieve from memory unit
@@ -32,6 +38,7 @@ module gamefsm (
 
     }
   }
+  sig user_input[16];
   always {
     io_seg = ~seg.seg;
     io_sel = ~seg.sel;
@@ -44,46 +51,38 @@ module gamefsm (
     b[1] = b2_press;
     b[0] = b3_press;
     io_led=0;
+    store_b1_press.d = b1_press;
+    store_b2_press.d = b2_press;
+    store_b3_press.d = b3_press;
+    store_test_cases.d =  1110101011010111;// 111 010 011 101 110 001 5 shifts 5 test cases
+    
+    user_input[15:3] = 0; //last 13 bits of user input always 0
 //    alufn=0;
 //    alumod.alufn = alufn;
 //    alumod.a = a;          //put the test case into the alu input a      
 //    alumod.b = b;          //put user inputs into alu input b  
       case (state.q){                 //initial start state of finite state machine
     state.IDLE:
-        seg.values = {4h1, 4h1};
-          //placeholder logic
-        if(b1_press) {
-        
-          seg.values={4h1,4h2};
-          io_led[0] = 1;
-          
+        seg.values = {4h9, 4h9};
+        //if middle button is pressed, game starts, go to first test case
+        if(b2_press) {
+          seg.values={4h0,4h0};
+          state.d = state.CASE1;
           }
-        else if(b2_press){
-          io_led[1]=1;
-          seg.values={4h1,4h3};
-          }
-        else if(b3_press){
-          io_led[2]=1;
-          seg.values={4h1,4h4};
-        }
         else{
           io_led = 0;
         }
-        state.d = state.IDLE;
-        /*
-        //logic to check if input presses b matches test cases a, must use alu accordingly 
-        if(somebuttonpress && stateCOUNT.inc_state == 1){     
-           state.d = state.CASE1;          
-        }
-      */  
-      state.CASE1:                   
-      //placeholder logic
-        if(stateCOUNT.inc_state==1) seg.values={4h0,4h1};
-        
+    state.CASE1:                   
+        if(stateCOUNT.inc_state==1 || (store_b1_press.q == 1 && store_b2_press.q == 1 && store_b3_press.q == 1)) {
+          seg.values={4h0,4h1};
+          state.d = state.CASE2;        
+          }
+    state.CASE2:
+        seg.values={4h0,4h2};
         /*
         // more state logic to check if input presses b matches test cases a
         if(){ 
-        } */
+        } */        
         
-     } //encapsulate case(state.q)
+     } //encapsulates case(state.q)
   }

@@ -8,15 +8,15 @@ module stateCounter (
   ) {
   
   //connect the rst signal to the counter
-  dff stateCounter[28](.clk(clk),.rst(rst));
+  dff stateCounter[29](.clk(clk),.rst(rst));
   
   always {
-    inc_state = stateCounter.q[27]; 
-    // connects out to the digid of the 28th dff
-    // every 2^28 cycle , out will be 100/(2^28)= (around 1.4 seconds)
+    inc_state = stateCounter.q[28]; 
+    // connects out to the digit of the 27th dff
+    // every 2^28 cycle , 1/[(100 MHZ/(2^27)])= 2.98
     stateCounter.d = stateCounter.q + 1;
-    if (stateCounter.q[27]==1) {
-      stateCounter.d[27] = 0;
+    if (stateCounter.q[28]==1) {
+      stateCounter.d[28] = 0;
     } 
     
   }

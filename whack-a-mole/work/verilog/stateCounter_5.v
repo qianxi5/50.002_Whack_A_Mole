@@ -12,15 +12,15 @@ module stateCounter_5 (
   
   
   
-  reg [27:0] M_stateCounter_d, M_stateCounter_q = 1'h0;
+  reg [28:0] M_stateCounter_d, M_stateCounter_q = 1'h0;
   
   always @* begin
     M_stateCounter_d = M_stateCounter_q;
     
-    inc_state = M_stateCounter_q[27+0-:1];
+    inc_state = M_stateCounter_q[28+0-:1];
     M_stateCounter_d = M_stateCounter_q + 1'h1;
-    if (M_stateCounter_q[27+0-:1] == 1'h1) begin
-      M_stateCounter_d[27+0-:1] = 1'h0;
+    if (M_stateCounter_q[28+0-:1] == 1'h1) begin
+      M_stateCounter_d[28+0-:1] = 1'h0;
     end
   end
   

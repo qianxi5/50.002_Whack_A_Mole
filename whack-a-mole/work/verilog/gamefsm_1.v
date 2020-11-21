@@ -26,6 +26,10 @@ module gamefsm_1 (
   localparam CASE2_state = 2'd2;
   
   reg [1:0] M_state_d, M_state_q = IDLE_state;
+  reg [15:0] M_store_b1_press_d, M_store_b1_press_q = 1'h0;
+  reg [15:0] M_store_b2_press_d, M_store_b2_press_q = 1'h0;
+  reg [15:0] M_store_b3_press_d, M_store_b3_press_q = 1'h0;
+  reg [15:0] M_store_test_cases_d, M_store_test_cases_q = 1'h0;
   wire [1-1:0] M_stateCOUNT_inc_state;
   stateCounter_5 stateCOUNT (
     .clk(clk),
@@ -43,8 +47,14 @@ module gamefsm_1 (
     .sel(M_seg_sel)
   );
   
+  reg [15:0] user_input;
+  
   always @* begin
     M_state_d = M_state_q;
+    M_store_b2_press_d = M_store_b2_press_q;
+    M_store_b3_press_d = M_store_b3_press_q;
+    M_store_test_cases_d = M_store_test_cases_q;
+    M_store_b1_press_d = M_store_b1_press_q;
     
     io_seg = ~M_seg_seg;
     io_sel = ~M_seg_sel;
@@ -54,35 +64,39 @@ module gamefsm_1 (
     b[1+0-:1] = b2_press;
     b[0+0-:1] = b3_press;
     io_led = 1'h0;
+    M_store_b1_press_d = b1_press;
+    M_store_b2_press_d = b2_press;
+    M_store_b3_press_d = b3_press;
+    M_store_test_cases_d = 50'h3f1a1886d123f;
+    user_input[3+12-:13] = 1'h0;
     
     case (M_state_q)
       IDLE_state: begin
-        M_seg_values = 8'h11;
-        if (b1_press) begin
-          M_seg_values = 8'h12;
-          io_led[0+0-:1] = 1'h1;
+        M_seg_values = 8'h99;
+        if (b2_press) begin
+          M_seg_values = 8'h00;
+          M_state_d = CASE1_state;
         end else begin
-          if (b2_press) begin
-            io_led[1+0-:1] = 1'h1;
-            M_seg_values = 8'h13;
-          end else begin
-            if (b3_press) begin
-              io_led[2+0-:1] = 1'h1;
-              M_seg_values = 8'h14;
-            end
-          end
+          io_led = 1'h0;
         end
-        M_state_d = IDLE_state;
       end
       CASE1_state: begin
-        if (M_stateCOUNT_inc_state == 1'h1) begin
+        if (M_stateCOUNT_inc_state == 1'h1 || (M_store_b1_press_q == 1'h1 && M_store_b2_press_q == 1'h1 && M_store_b3_press_q == 1'h1)) begin
           M_seg_values = 8'h01;
+          M_state_d = CASE2_state;
         end
+      end
+      CASE2_state: begin
+        M_seg_values = 8'h02;
       end
     endcase
   end
   
   always @(posedge clk) begin
+    M_store_b1_press_q <= M_store_b1_press_d;
+    M_store_b2_press_q <= M_store_b2_press_d;
+    M_store_b3_press_q <= M_store_b3_press_d;
+    M_store_test_cases_q <= M_store_test_cases_d;
     M_state_q <= M_state_d;
   end
   
