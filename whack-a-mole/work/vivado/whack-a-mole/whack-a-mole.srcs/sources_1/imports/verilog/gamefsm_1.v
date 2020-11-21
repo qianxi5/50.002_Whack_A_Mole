@@ -12,26 +12,55 @@ module gamefsm_1 (
     input b1_press,
     input b2_press,
     input b3_press,
-    output reg [2:0] io_led
+    output reg [23:0] io_led,
+    input [2:0] io_dip,
+    output reg [2:0] led
   );
   
   
   
-  reg [2:0] a;
+  reg [3:0] stage_count;
   
-  reg [2:0] b;
+  reg [15:0] a;
   
-  localparam IDLE_state = 2'd0;
-  localparam CASE1_state = 2'd1;
-  localparam CASE2_state = 2'd2;
+  reg [15:0] user_input;
   
-  reg [1:0] M_state_d, M_state_q = IDLE_state;
-  reg [15:0] M_store_b1_press_d, M_store_b1_press_q = 1'h0;
-  reg [15:0] M_store_b2_press_d, M_store_b2_press_q = 1'h0;
-  reg [15:0] M_store_b3_press_d, M_store_b3_press_q = 1'h0;
+  reg [5:0] alufn;
+  
+  wire [16-1:0] M_alumod_alu;
+  wire [1-1:0] M_alumod_z;
+  wire [1-1:0] M_alumod_v;
+  wire [1-1:0] M_alumod_n;
+  reg [6-1:0] M_alumod_alufn;
+  reg [16-1:0] M_alumod_a;
+  reg [16-1:0] M_alumod_b;
+  alu_5 alumod (
+    .alufn(M_alumod_alufn),
+    .a(M_alumod_a),
+    .b(M_alumod_b),
+    .alu(M_alumod_alu),
+    .z(M_alumod_z),
+    .v(M_alumod_v),
+    .n(M_alumod_n)
+  );
+  
+  reg [15:0] masked_test_cases;
+  
+  localparam INIT_state = 3'd0;
+  localparam IDLE_state = 3'd1;
+  localparam CHECK_CORRECT_PRESS_state = 3'd2;
+  localparam CASE1_state = 3'd3;
+  localparam CASE2_state = 3'd4;
+  localparam CASE3_state = 3'd5;
+  localparam CASE4_state = 3'd6;
+  localparam CASE5_state = 3'd7;
+  
+  reg [2:0] M_state_d, M_state_q = INIT_state;
+  reg [15:0] M_store_presses_d, M_store_presses_q = 1'h0;
   reg [15:0] M_store_test_cases_d, M_store_test_cases_q = 1'h0;
+  reg [15:0] M_temp_register_d, M_temp_register_q = 1'h0;
   wire [1-1:0] M_stateCOUNT_inc_state;
-  stateCounter_5 stateCOUNT (
+  stateCounter_6 stateCOUNT (
     .clk(clk),
     .rst(rst),
     .inc_state(M_stateCOUNT_inc_state)
@@ -39,7 +68,7 @@ module gamefsm_1 (
   wire [7-1:0] M_seg_seg;
   wire [2-1:0] M_seg_sel;
   reg [8-1:0] M_seg_values;
-  multi_seven_seg_6 seg (
+  multi_seven_seg_7 seg (
     .clk(clk),
     .rst(rst),
     .values(M_seg_values),
@@ -47,56 +76,83 @@ module gamefsm_1 (
     .sel(M_seg_sel)
   );
   
-  reg [15:0] user_input;
-  
   always @* begin
     M_state_d = M_state_q;
-    M_store_b2_press_d = M_store_b2_press_q;
-    M_store_b3_press_d = M_store_b3_press_q;
+    M_store_presses_d = M_store_presses_q;
     M_store_test_cases_d = M_store_test_cases_q;
-    M_store_b1_press_d = M_store_b1_press_q;
     
+    led = 1'h0;
     io_seg = ~M_seg_seg;
     io_sel = ~M_seg_sel;
     M_seg_values = 8'h00;
-    a = 1'h0;
-    b[2+0-:1] = b1_press;
-    b[1+0-:1] = b2_press;
-    b[0+0-:1] = b3_press;
-    io_led = 1'h0;
-    M_store_b1_press_d = b1_press;
-    M_store_b2_press_d = b2_press;
-    M_store_b3_press_d = b3_press;
-    M_store_test_cases_d = 50'h3f1a1886d123f;
+    M_alumod_a = M_store_test_cases_q;
+    io_led[0+0+0-:1] = 1'h0;
+    M_store_test_cases_d = 16'head7;
     user_input[3+12-:13] = 1'h0;
-    
-    case (M_state_q)
-      IDLE_state: begin
-        M_seg_values = 8'h99;
-        if (b2_press) begin
-          M_seg_values = 8'h00;
-          M_state_d = CASE1_state;
+    user_input[0+0-:1] = b1_press;
+    user_input[1+0-:1] = b2_press;
+    user_input[2+0-:1] = b3_press;
+    M_store_presses_d = user_input;
+    alufn = 6'h00;
+    M_alumod_alufn = 6'h00;
+    M_alumod_a = 1'h0;
+    M_alumod_b = 1'h0;
+    masked_test_cases[3+12-:13] = 1'h0;
+    if (io_dip[0+0+0-:1]) begin
+      io_led[8+7-:8] = user_input[0+7-:8];
+      io_led[16+7-:8] = user_input[8+7-:8];
+    end else begin
+      if (io_dip[0+1+0-:1]) begin
+        io_led[8+7-:8] = masked_test_cases[0+7-:8];
+        io_led[16+7-:8] = masked_test_cases[8+7-:8];
+      end else begin
+        if (io_dip[0+2+0-:1]) begin
+          io_led[8+7-:8] = M_alumod_alu[0+7-:8];
+          io_led[16+7-:8] = M_alumod_alu[8+7-:8];
         end else begin
-          io_led = 1'h0;
+          io_led[0+7-:8] = 1'h0;
+          io_led[8+7-:8] = 1'h0;
         end
       end
-      CASE1_state: begin
-        if (M_stateCOUNT_inc_state == 1'h1 || (M_store_b1_press_q == 1'h1 && M_store_b2_press_q == 1'h1 && M_store_b3_press_q == 1'h1)) begin
+    end
+    
+    case (M_state_q)
+      INIT_state: begin
+        M_seg_values = 8'h99;
+        if (b2_press) begin
+          M_state_d = IDLE_state;
+        end else begin
+          led = 1'h0;
+        end
+      end
+      CHECK_CORRECT_PRESS_state: begin
+        if (M_stateCOUNT_inc_state == 1'h1 || M_store_presses_q != 1'h0) begin
           M_seg_values = 8'h01;
-          M_state_d = CASE2_state;
+          masked_test_cases[0+2-:3] = M_store_test_cases_q;
+          M_alumod_a = masked_test_cases;
+          M_alumod_b = M_store_test_cases_q;
+          M_alumod_alufn = 6'h32;
+          if (M_alumod_alu == 16'h0001) begin
+            M_seg_values = 8'h88;
+          end else begin
+            M_seg_values = 8'h44;
+          end
         end
       end
       CASE2_state: begin
         M_seg_values = 8'h02;
       end
+      IDLE_state: begin
+        M_seg_values = 8'h00;
+        M_state_d = CHECK_CORRECT_PRESS_state;
+      end
     endcase
   end
   
   always @(posedge clk) begin
-    M_store_b1_press_q <= M_store_b1_press_d;
-    M_store_b2_press_q <= M_store_b2_press_d;
-    M_store_b3_press_q <= M_store_b3_press_d;
+    M_store_presses_q <= M_store_presses_d;
     M_store_test_cases_q <= M_store_test_cases_d;
+    M_temp_register_q <= M_temp_register_d;
     M_state_q <= M_state_d;
   end
   

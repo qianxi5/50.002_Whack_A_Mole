@@ -7,27 +7,32 @@ module gamefsm (
     input b1_press,
     input b2_press,
     input b3_press,    
-    output io_led[3]
+    output io_led[3][8],
+    input io_dip[1][3],
+    output led[3]
     //output b1_light,
     //output b2_light,
     //output b3_light    
     ) {
+  //alumod.a is always test case
+  //alumod.b is  always user_input
+  sig stage_count[4];
+  sig a[16];
 
-  sig a[3];
-  sig b[3];
-//  sig alufn[6];    
-//  sig alu[16];
+  sig user_input[16];  
+  sig alufn[6];    
+  alu alumod;
+  sig masked_test_cases[16];
 //  alu alumod; 
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
-    fsm state = {IDLE, CASE1, CASE2 };
-    
+    fsm state = {INIT, IDLE, CHECK_CORRECT_PRESS, CASE1, CASE2, CASE3, CASE4, CASE5 };
+    //in the respective CASE, fit in masked value for compareeq
     //there's no point creating a separate memory unit luc source file since it is very small, and no logic for retrieving data. 
-    dff store_b1_press[16];      //delay flip flops used for storing values of a,b,store_alufn
-    dff store_b2_press[16];
-    dff store_b3_press[16];
+    dff store_presses[16];      //delay flip flops used for storing values of a,b,store_alufn
     dff store_test_cases[16];
+    dff temp_register[16];
     .rst(rst){
   
      //  dff store_a[3];   // a is test case input, to retrieve from memory unit
@@ -38,44 +43,86 @@ module gamefsm (
 
     }
   }
-  sig user_input[16];
+
   always {
+    led = 0;
     io_seg = ~seg.seg;
     io_sel = ~seg.sel;
     seg.values = {4h0,4h0}; //initial score
-    
-    a=0; //test case 0 at start
-    
+    alumod.a = store_test_cases.q;    
     //a is supplied in each test case, b is user inputs from b1_press, b2_press, b3_press, etc from au_top
-    b[2] = b1_press;
-    b[1] = b2_press;
-    b[0] = b3_press;
-    io_led=0;
-    store_b1_press.d = b1_press;
-    store_b2_press.d = b2_press;
-    store_b3_press.d = b3_press;
-    store_test_cases.d =  1110101011010111;// 111 010 011 101 110 001 5 shifts 5 test cases
+
+    io_led[0][0]= 0;
+    
+    store_test_cases.d =  16b1110101011010111;// 111 010 011 101 110 001 5 shifts 5 test cases
     
     user_input[15:3] = 0; //last 13 bits of user input always 0
-//    alufn=0;
-//    alumod.alufn = alufn;
-//    alumod.a = a;          //put the test case into the alu input a      
-//    alumod.b = b;          //put user inputs into alu input b  
-      case (state.q){                 //initial start state of finite state machine
-    state.IDLE:
+    user_input[0] = b1_press;
+    user_input[1] = b2_press;
+    user_input[2] = b3_press;
+    
+    store_presses.d = user_input;
+    alufn=6b0;
+    alumod.alufn = 6b0;
+    alumod.a = 0;          //put the test case into the alu input a      
+    alumod.b = 0;        //put user inputs into alu input b 
+    masked_test_cases[15:3] = 0;
+     if(io_dip[0][0]){
+                io_led[1] = user_input[7:0];           
+                io_led[2] = user_input[15:8];  
+              }
+     else if(io_dip[0][1]){
+                io_led[1] = masked_test_cases[7:0];           
+                io_led[2] = masked_test_cases[15:8];  
+            }
+    else if(io_dip[0][2]){
+                io_led[1] = alumod.alu[7:0];           
+                io_led[2] = alumod.alu[15:8];  
+    
+    }
+    else { 
+    io_led[1] = 0;
+    io_led[2] = 0;
+    } 
+    case (state.q){                 //initial start state of finite state machine
+    state.INIT:
         seg.values = {4h9, 4h9};
         //if middle button is pressed, game starts, go to first test case
         if(b2_press) {
-          seg.values={4h0,4h0};
-          state.d = state.CASE1;
+          state.d = state.IDLE;
           }
         else{
-          io_led = 0;
+          led = 0;
         }
-    state.CASE1:                   
-        if(stateCOUNT.inc_state==1 || (store_b1_press.q == 1 && store_b2_press.q == 1 && store_b3_press.q == 1)) {
+    state.CHECK_CORRECT_PRESS:                   
+      //store_presses is 0x3 in regfile
+        if(stateCOUNT.inc_state==1 || store_presses.q != 0) {
           seg.values={4h0,4h1};
-          state.d = state.CASE2;        
+          //mask the last 13 bits of the test cases
+          masked_test_cases[2:0] = store_test_cases.q; //auto drop msb 13 bits
+          alumod.a = masked_test_cases;
+          alumod.b = store_test_cases.q;
+          alumod.alufn = 6b110010;
+          //if user inputs match test cases, go do the respective operations
+          if(alumod.alu == b0000000000000001){
+            //jump to increase_stage_count, then from there jump to shift test case sequence
+            //for now, I am using 88 on 7-seg to simulate success in alu compare eq for the 2 inputs
+            //test case: if all works, then io seg will display 99 --> 00 
+            seg.values = {4h8, 4h8};
+                       
+            }
+          else{
+          //   state.d = state.IDLE;
+            seg.values = {4h4, 4h4};
+              }
+          
+          //TODO: shift right store_test_cases by 3
+          //set input into alumod.a, alumod.b
+          //alumod.a = store_test_cases.q;
+          //alumod.b = 3;
+          //alufn = 100000;
+          //temp_register.d = alumod.alu;
+          //state.d = state.CASE2;        
           }
     state.CASE2:
         seg.values={4h0,4h2};
@@ -83,6 +130,8 @@ module gamefsm (
         // more state logic to check if input presses b matches test cases a
         if(){ 
         } */        
-        
+    state.IDLE:
+      seg.values={4h0,4h0};
+      state.d = state.CHECK_CORRECT_PRESS;
      } //encapsulates case(state.q)
   }

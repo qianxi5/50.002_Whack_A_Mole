@@ -8,7 +8,7 @@ module au_top (
     output io_seg [8],      // 7-segment LEDs on IO Shield
     output io_sel [4],      // Digit select on IO Shield
     input io_button [5],    // 5 buttons on IO Shield
-   // input io_dip [3][8],    // DIP switches on IO Shield
+    input io_dip [1][3],    // DIP switches on IO Shield
     input b1_press,
     input b2_press,
     input b3_press,    
@@ -95,9 +95,9 @@ module au_top (
     
     
     //no need the above anymore, linking the io leds to respective io leds in gamefsm
-    io_led[0][0] = gameFsmInstance.io_led[0];
-    io_led[0][2] = gameFsmInstance.io_led[1];
-    io_led[0][4] = gameFsmInstance.io_led[2];
+    //io_led[0][0] = gameFsmInstance.led[0];
+    //io_led[0][2] = gameFsmInstance.led[1];
+    //io_led[0][4] = gameFsmInstance.led[2];
     
     //io_led[0][0] = buttondetector1.out;
     //io_led[0][2] = buttondetector2.out;  
@@ -115,5 +115,13 @@ module au_top (
     
     //gameFsmInstance.b1_press = buttondetector1.out;
     //gameFsmInstance.b2_press = buttondetector2.out;
-    //gameFsmInstance.b3_press = buttondetector3.out;    
+    //gameFsmInstance.b3_press = buttondetector3.out;
+    gameFsmInstance.io_dip[0][0]= io_dip[0][0];
+    gameFsmInstance.io_dip[0][1]= io_dip[0][1];    
+    gameFsmInstance.io_dip[0][2]= io_dip[0][2];    
+
+    io_led[0] = gameFsmInstance.io_led[0];
+    io_led[1] = gameFsmInstance.io_led[1];
+    io_led[2] = gameFsmInstance.io_led[2];
+
 }

@@ -14,6 +14,7 @@ module au_top_0 (
     output reg [7:0] io_seg,
     output reg [3:0] io_sel,
     input [4:0] io_button,
+    input [2:0] io_dip,
     input b1_press,
     input b2_press,
     input b3_press,
@@ -28,19 +29,23 @@ module au_top_0 (
   
   wire [8-1:0] M_gameFsmInstance_io_seg;
   wire [4-1:0] M_gameFsmInstance_io_sel;
-  wire [3-1:0] M_gameFsmInstance_io_led;
+  wire [24-1:0] M_gameFsmInstance_io_led;
+  wire [3-1:0] M_gameFsmInstance_led;
   reg [1-1:0] M_gameFsmInstance_b1_press;
   reg [1-1:0] M_gameFsmInstance_b2_press;
   reg [1-1:0] M_gameFsmInstance_b3_press;
+  reg [3-1:0] M_gameFsmInstance_io_dip;
   gamefsm_1 gameFsmInstance (
     .clk(clk),
     .rst(rst),
     .b1_press(M_gameFsmInstance_b1_press),
     .b2_press(M_gameFsmInstance_b2_press),
     .b3_press(M_gameFsmInstance_b3_press),
+    .io_dip(M_gameFsmInstance_io_dip),
     .io_seg(M_gameFsmInstance_io_seg),
     .io_sel(M_gameFsmInstance_io_sel),
-    .io_led(M_gameFsmInstance_io_led)
+    .io_led(M_gameFsmInstance_io_led),
+    .led(M_gameFsmInstance_led)
   );
   
   wire [1-1:0] M_reset_cond_out;
@@ -110,11 +115,14 @@ module au_top_0 (
     b1_light = M_b1_press_cond_out;
     b2_light = M_b2_press_cond_out;
     b3_light = M_b3_press_cond_out;
-    io_led[0+0+0-:1] = M_gameFsmInstance_io_led[0+0-:1];
-    io_led[0+2+0-:1] = M_gameFsmInstance_io_led[1+0-:1];
-    io_led[0+4+0-:1] = M_gameFsmInstance_io_led[2+0-:1];
     M_gameFsmInstance_b1_press = M_b1_press_cond_out;
     M_gameFsmInstance_b2_press = M_b2_press_cond_out;
     M_gameFsmInstance_b3_press = M_b3_press_cond_out;
+    M_gameFsmInstance_io_dip[0+0+0-:1] = io_dip[0+0+0-:1];
+    M_gameFsmInstance_io_dip[0+1+0-:1] = io_dip[0+1+0-:1];
+    M_gameFsmInstance_io_dip[0+2+0-:1] = io_dip[0+2+0-:1];
+    io_led[0+7-:8] = M_gameFsmInstance_io_led[0+7-:8];
+    io_led[8+7-:8] = M_gameFsmInstance_io_led[8+7-:8];
+    io_led[16+7-:8] = M_gameFsmInstance_io_led[16+7-:8];
   end
 endmodule
