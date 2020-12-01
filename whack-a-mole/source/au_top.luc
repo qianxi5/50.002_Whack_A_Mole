@@ -4,7 +4,7 @@ module au_top (
     output led [8],         // 8 user controllable LEDs
     input usb_rx,           // USB->Serial input
     output usb_tx,          // USB->Serial output
-    output io_led [3][8],   // LEDs on IO Shield
+    //output io_led [3][8],   // LEDs on IO Shield
     output io_seg [8],      // 7-segment LEDs on IO Shield
     output io_sel [4],      // Digit select on IO Shield
     input io_button [5],    // 5 buttons on IO Shield
@@ -39,7 +39,7 @@ module au_top (
     
     led = 8h00;             // turn LEDs off
     
-    io_led = 3x{{8h00}};    // turn LEDs off
+   // io_led = 3x{{8h00}};    // turn LEDs off
     
     io_seg = gameFsmInstance.io_seg;          // turn segments off
     io_sel = gameFsmInstance.io_sel;           //see io_sel in gamefsm.luc
@@ -119,9 +119,9 @@ module au_top (
     gameFsmInstance.io_dip[0][0]= io_dip[0][0];
     gameFsmInstance.io_dip[0][1]= io_dip[0][1];    
     gameFsmInstance.io_dip[0][2]= io_dip[0][2];    
-
+/*for debugging
     io_led[0] = gameFsmInstance.io_led[0];
     io_led[1] = gameFsmInstance.io_led[1];
     io_led[2] = gameFsmInstance.io_led[2];
-
+    */
 }

@@ -139,6 +139,7 @@ OPTRACE "read constraints: implementation" START { }
   read_xdc C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/constraint/alchitry.xdc
   read_xdc {{C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc}}
   read_xdc C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/constraint/custom.xdc
+  read_xdc C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/constraint/custom.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }

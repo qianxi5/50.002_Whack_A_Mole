@@ -4,20 +4,21 @@ module stateCounter (
     input rst,  // reset
     
     output inc_state  //output
- 
+    //output time_left[16]
   ) {
   
   //connect the rst signal to the counter
   dff stateCounter[29](.clk(clk),.rst(rst));
   
   always {
+     if (stateCounter.q[28]==1) {
+      stateCounter.d[28] = 0;
+    } 
     inc_state = stateCounter.q[28]; 
+    //time_left = stateCounter.q[28:13];
     // connects out to the digit of the 27th dff
     // every 2^28 cycle , 1/[(100 MHZ/(2^29)])= 2.98
     stateCounter.d = stateCounter.q + 1;
-    if (stateCounter.q[28]==1) {
-      stateCounter.d[28] = 0;
-    } 
-    
+   
   }
 }

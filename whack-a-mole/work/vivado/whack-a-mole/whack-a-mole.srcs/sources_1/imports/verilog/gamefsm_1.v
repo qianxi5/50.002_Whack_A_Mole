@@ -12,7 +12,6 @@ module gamefsm_1 (
     input b1_press,
     input b2_press,
     input b3_press,
-    output reg [23:0] io_led,
     input [2:0] io_dip,
     output reg [2:0] led
   );
@@ -23,9 +22,9 @@ module gamefsm_1 (
   
   reg [15:0] a;
   
-  reg [15:0] user_input;
+  reg [15:0] alu;
   
-  reg [5:0] alufn;
+  reg [15:0] user_input;
   
   wire [16-1:0] M_alumod_alu;
   wire [1-1:0] M_alumod_z;
@@ -46,19 +45,26 @@ module gamefsm_1 (
   
   reg [15:0] masked_test_cases;
   
-  localparam INIT_state = 3'd0;
-  localparam IDLE_state = 3'd1;
-  localparam CHECK_CORRECT_PRESS_state = 3'd2;
-  localparam CASE1_state = 3'd3;
-  localparam CASE2_state = 3'd4;
-  localparam CASE3_state = 3'd5;
-  localparam CASE4_state = 3'd6;
-  localparam CASE5_state = 3'd7;
+  localparam INIT_state = 4'd0;
+  localparam IDLE_state = 4'd1;
+  localparam CHECK_CORRECT_PRESS_state = 4'd2;
+  localparam SHOW_SCORE_state = 4'd3;
+  localparam CALCULATE_SCORE_state = 4'd4;
+  localparam WAIT_state = 4'd5;
+  localparam CALCULATE_DIGIT_state = 4'd6;
+  localparam CALCULATE_DIGIT_INI_state = 4'd7;
+  localparam CALCULATE_DIGIT_2_state = 4'd8;
+  localparam CALCULATE_SCORE_META_state = 4'd9;
   
-  reg [2:0] M_state_d, M_state_q = INIT_state;
+  reg [3:0] M_state_d, M_state_q = INIT_state;
   reg [15:0] M_store_presses_d, M_store_presses_q = 1'h0;
   reg [15:0] M_store_test_cases_d, M_store_test_cases_q = 1'h0;
   reg [15:0] M_temp_register_d, M_temp_register_q = 1'h0;
+  reg [15:0] M_score_d, M_score_q = 1'h0;
+  reg [2:0] M_button_presses_before_timer_d, M_button_presses_before_timer_q = 1'h0;
+  reg [3:0] M_first_digit_d, M_first_digit_q = 1'h0;
+  reg [3:0] M_second_digit_d, M_second_digit_q = 1'h0;
+  reg [15:0] M_times_d, M_times_q = 1'h0;
   wire [1-1:0] M_stateCOUNT_inc_state;
   stateCounter_6 stateCOUNT (
     .clk(clk),
@@ -78,72 +84,125 @@ module gamefsm_1 (
   
   always @* begin
     M_state_d = M_state_q;
+    M_score_d = M_score_q;
+    M_times_d = M_times_q;
+    M_button_presses_before_timer_d = M_button_presses_before_timer_q;
+    M_second_digit_d = M_second_digit_q;
     M_store_presses_d = M_store_presses_q;
     M_store_test_cases_d = M_store_test_cases_q;
+    M_first_digit_d = M_first_digit_q;
     
-    led = 1'h0;
     io_seg = ~M_seg_seg;
     io_sel = ~M_seg_sel;
-    M_seg_values = 8'h00;
+    M_seg_values = {M_second_digit_q, M_first_digit_q};
     M_alumod_a = M_store_test_cases_q;
-    io_led[0+0+0-:1] = 1'h0;
-    M_store_test_cases_d = 16'head7;
+    led = 1'h0;
     user_input[3+12-:13] = 1'h0;
     user_input[0+0-:1] = b1_press;
     user_input[1+0-:1] = b2_press;
     user_input[2+0-:1] = b3_press;
+    if (b1_press == 1'h1) begin
+      M_button_presses_before_timer_d[0+0-:1] = 1'h1;
+    end else begin
+      if (b2_press == 1'h1) begin
+        M_button_presses_before_timer_d[1+0-:1] = 1'h1;
+      end else begin
+        if (b3_press == 1'h1) begin
+          M_button_presses_before_timer_d[2+0-:1] = 1'h1;
+        end
+      end
+    end
     M_store_presses_d = user_input;
-    alufn = 6'h00;
     M_alumod_alufn = 6'h00;
     M_alumod_a = 1'h0;
     M_alumod_b = 1'h0;
     masked_test_cases[3+12-:13] = 1'h0;
-    if (io_dip[0+0+0-:1]) begin
-      io_led[8+7-:8] = user_input[0+7-:8];
-      io_led[16+7-:8] = user_input[8+7-:8];
-    end else begin
-      if (io_dip[0+1+0-:1]) begin
-        io_led[8+7-:8] = masked_test_cases[0+7-:8];
-        io_led[16+7-:8] = masked_test_cases[8+7-:8];
-      end else begin
-        if (io_dip[0+2+0-:1]) begin
-          io_led[8+7-:8] = M_alumod_alu[0+7-:8];
-          io_led[16+7-:8] = M_alumod_alu[8+7-:8];
-        end else begin
-          io_led[0+7-:8] = 1'h0;
-          io_led[8+7-:8] = 1'h0;
-        end
-      end
-    end
+    masked_test_cases[0+2-:3] = M_store_test_cases_q[0+2-:3];
+    led = masked_test_cases[0+2-:3];
     
     case (M_state_q)
       INIT_state: begin
-        M_seg_values = 8'h99;
+        M_times_d = 1'h0;
+        led = 1'h0;
+        M_store_test_cases_d = 16'h0000;
         if (b2_press) begin
           M_state_d = IDLE_state;
         end else begin
           led = 1'h0;
         end
       end
-      CHECK_CORRECT_PRESS_state: begin
-        if (M_stateCOUNT_inc_state == 1'h1 || M_store_presses_q != 1'h0) begin
-          M_seg_values = 8'h01;
-          masked_test_cases[0+2-:3] = M_store_test_cases_q;
-          M_alumod_a = masked_test_cases;
-          M_alumod_b = M_store_test_cases_q;
-          M_alumod_alufn = 6'h32;
-          if (M_alumod_alu == 16'h0001) begin
-            M_seg_values = 8'h88;
-          end else begin
-            M_seg_values = 8'h44;
-          end
+      SHOW_SCORE_state: begin
+        M_seg_values = {M_second_digit_q, M_first_digit_q};
+        if (M_store_test_cases_q == 3'h6) begin
+          M_store_test_cases_d = M_store_test_cases_q + 1'h1;
+        end else begin
+          M_store_test_cases_d = M_store_test_cases_q + 1'h1;
+          M_state_d = CHECK_CORRECT_PRESS_state;
         end
       end
-      CASE2_state: begin
-        M_seg_values = 8'h02;
+      CALCULATE_DIGIT_state: begin
+        if (M_first_digit_q >= 4'ha) begin
+          M_first_digit_d = M_first_digit_q - 4'ha;
+          M_second_digit_d = M_second_digit_q + 1'h1;
+          M_state_d = SHOW_SCORE_state;
+        end
+        M_state_d = SHOW_SCORE_state;
+        if (M_second_digit_q >= 1'h1 && M_first_digit_q >= 1'h0) begin
+          M_first_digit_d = 4'h8;
+          M_second_digit_d = 4'h8;
+          M_state_d = WAIT_state;
+        end
+        M_state_d = SHOW_SCORE_state;
+      end
+      CALCULATE_SCORE_META_state: begin
+        M_alumod_a = M_button_presses_before_timer_q;
+        M_alumod_b = masked_test_cases;
+        M_alumod_alufn = 17'h1adba;
+        if (M_alumod_alu == 1'h1 && M_button_presses_before_timer_q[2+0-:1] == masked_test_cases[2+0-:1] && M_button_presses_before_timer_q[1+0-:1] == masked_test_cases[1+0-:1] && M_button_presses_before_timer_q[0+0-:1] == masked_test_cases[0+0-:1] && M_score_q == 1'h0 && (masked_test_cases[2+0-:1] != 1'h0 || masked_test_cases[1+0-:1] != 1'h0 || masked_test_cases[0+0-:1] != 1'h0)) begin
+          M_score_d = M_score_q + 1'h1;
+        end
+        M_button_presses_before_timer_d = 1'h0;
+        M_state_d = CALCULATE_DIGIT_INI_state;
+      end
+      CALCULATE_SCORE_state: begin
+        M_score_d = 1'h0;
+        M_state_d = CALCULATE_SCORE_META_state;
+      end
+      CALCULATE_DIGIT_INI_state: begin
+        M_alumod_a = M_score_q;
+        M_alumod_b = 16'h0000;
+        M_alumod_alufn = 17'h1ae1e;
+        M_score_d = 1'h0;
+        M_state_d = CALCULATE_DIGIT_2_state;
+      end
+      CALCULATE_DIGIT_2_state: begin
+        if (M_alumod_alu != 1'h1) begin
+          M_alumod_a = M_first_digit_q;
+          M_alumod_b = 1'h1;
+          M_alumod_alufn = 1'h0;
+          M_first_digit_d = M_alumod_alu;
+        end
+        M_state_d = CALCULATE_DIGIT_state;
+      end
+      CHECK_CORRECT_PRESS_state: begin
+        if (M_second_digit_q == 4'h8) begin
+          M_state_d = WAIT_state;
+        end
+        if (M_second_digit_q >= 4'ha) begin
+          M_second_digit_d = 1'h0;
+        end
+        if (M_stateCOUNT_inc_state == 1'h1) begin
+          M_state_d = CALCULATE_SCORE_state;
+        end
+      end
+      WAIT_state: begin
+        if (M_stateCOUNT_inc_state == 1'h1) begin
+          M_state_d = INIT_state;
+        end
       end
       IDLE_state: begin
-        M_seg_values = 8'h00;
+        M_first_digit_d = 1'h0;
+        M_second_digit_d = 1'h0;
         M_state_d = CHECK_CORRECT_PRESS_state;
       end
     endcase
@@ -153,6 +212,11 @@ module gamefsm_1 (
     M_store_presses_q <= M_store_presses_d;
     M_store_test_cases_q <= M_store_test_cases_d;
     M_temp_register_q <= M_temp_register_d;
+    M_score_q <= M_score_d;
+    M_button_presses_before_timer_q <= M_button_presses_before_timer_d;
+    M_first_digit_q <= M_first_digit_d;
+    M_second_digit_q <= M_second_digit_d;
+    M_times_q <= M_times_d;
     M_state_q <= M_state_d;
   end
   

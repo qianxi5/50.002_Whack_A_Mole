@@ -10,7 +10,6 @@ module au_top_0 (
     output reg [7:0] led,
     input usb_rx,
     output reg usb_tx,
-    output reg [23:0] io_led,
     output reg [7:0] io_seg,
     output reg [3:0] io_sel,
     input [4:0] io_button,
@@ -29,7 +28,6 @@ module au_top_0 (
   
   wire [8-1:0] M_gameFsmInstance_io_seg;
   wire [4-1:0] M_gameFsmInstance_io_sel;
-  wire [24-1:0] M_gameFsmInstance_io_led;
   wire [3-1:0] M_gameFsmInstance_led;
   reg [1-1:0] M_gameFsmInstance_b1_press;
   reg [1-1:0] M_gameFsmInstance_b2_press;
@@ -44,7 +42,6 @@ module au_top_0 (
     .io_dip(M_gameFsmInstance_io_dip),
     .io_seg(M_gameFsmInstance_io_seg),
     .io_sel(M_gameFsmInstance_io_sel),
-    .io_led(M_gameFsmInstance_io_led),
     .led(M_gameFsmInstance_led)
   );
   
@@ -103,7 +100,6 @@ module au_top_0 (
     rst = M_reset_cond_out;
     usb_tx = usb_rx;
     led = 8'h00;
-    io_led = 24'h000000;
     io_seg = M_gameFsmInstance_io_seg;
     io_sel = M_gameFsmInstance_io_sel;
     M_b1_press_cond_in = b1_press;
@@ -121,8 +117,5 @@ module au_top_0 (
     M_gameFsmInstance_io_dip[0+0+0-:1] = io_dip[0+0+0-:1];
     M_gameFsmInstance_io_dip[0+1+0-:1] = io_dip[0+1+0-:1];
     M_gameFsmInstance_io_dip[0+2+0-:1] = io_dip[0+2+0-:1];
-    io_led[0+7-:8] = M_gameFsmInstance_io_led[0+7-:8];
-    io_led[8+7-:8] = M_gameFsmInstance_io_led[8+7-:8];
-    io_led[16+7-:8] = M_gameFsmInstance_io_led[16+7-:8];
   end
 endmodule

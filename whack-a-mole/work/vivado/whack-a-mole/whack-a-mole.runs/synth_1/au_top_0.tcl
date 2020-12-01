@@ -119,6 +119,9 @@ set_property used_in_implementation false [get_files {{C:/Program Files/Alchitry
 read_xdc C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/constraint/custom.xdc
 set_property used_in_implementation false [get_files C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/work/constraint/custom.xdc]
 
+read_xdc C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/constraint/custom.xdc
+set_property used_in_implementation false [get_files C:/Users/Carey/Desktop/repos/projectx/whack-a-mole/constraint/custom.xdc]
+
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
