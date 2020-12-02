@@ -14,7 +14,8 @@ module au_top (
     input b3_press,    
     output b1_light,
     output b2_light,
-    output b3_light
+    output b3_light,
+    input reset
 ){  
 // sig btn_light_intemediate[3];
   sig rst;                  // reset signal
@@ -38,8 +39,8 @@ module au_top (
     usb_tx = usb_rx;        // loop serial port
     
     led = 8h00;             // turn LEDs off
-    
-   // io_led = 3x{{8h00}};    // turn LEDs off
+    if(reset) rst = 1; //add reset button "to all states"
+    //io_led = 3x{{8h00}};    // turn LEDs off
     
     io_seg = gameFsmInstance.io_seg;          // turn segments off
     io_sel = gameFsmInstance.io_sel;           //see io_sel in gamefsm.luc
@@ -67,9 +68,9 @@ module au_top (
     //b2_light = 0;
     //b3_light = 1;
         
-    b1_light = b1_press_cond.out;
-    b2_light = b2_press_cond.out;    
-    b3_light = b3_press_cond.out;   //take the output of the button condition instead of the output of the button detector  
+    //b1_light = b1_press_cond.out;
+    //b2_light = b2_press_cond.out;    
+    //b3_light = b3_press_cond.out;   //take the output of the button condition instead of the output of the button detector  
 
     //no TDO errors with these 
     //    b1_light = buttondetector1.out;
@@ -109,19 +110,27 @@ module au_top (
     //gameFsmInstance.b3_press = b3_press_cond.out;
     
         
-    gameFsmInstance.b1_press = b1_press_cond.out;
-    gameFsmInstance.b2_press = b2_press_cond.out;
-    gameFsmInstance.b3_press = b3_press_cond.out;
+    //gameFsmInstance.b1_press = b1_press_cond.out;
+    //gameFsmInstance.b2_press = b2_press_cond.out;
+    //gameFsmInstance.b3_press = b3_press_cond.out;
     
-    //gameFsmInstance.b1_press = buttondetector1.out;
-    //gameFsmInstance.b2_press = buttondetector2.out;
-    //gameFsmInstance.b3_press = buttondetector3.out;
+    //must add edge detectors for arcade buttons. normal cheap buttons no need 
+    gameFsmInstance.b1_press = buttondetector1.out;
+    gameFsmInstance.b2_press = buttondetector2.out;
+    gameFsmInstance.b3_press = buttondetector3.out;
+    
+    //no need these debug modes anymore. in the past used to use one dip switch each to show user_inputs, test cases and alu output respectively for debugging.
     gameFsmInstance.io_dip[0][0]= io_dip[0][0];
     gameFsmInstance.io_dip[0][1]= io_dip[0][1];    
     gameFsmInstance.io_dip[0][2]= io_dip[0][2];    
-/*for debugging
-    io_led[0] = gameFsmInstance.io_led[0];
-    io_led[1] = gameFsmInstance.io_led[1];
-    io_led[2] = gameFsmInstance.io_led[2];
-    */
+
+    //debug leds, no need anymore 
+    //io_led[0] = gameFsmInstance.io_led[0];
+    //io_led[1] = gameFsmInstance.io_led[1];
+    //io_led[2] = gameFsmInstance.io_led[2];
+    
+    b1_light = gameFsmInstance.led[0];
+    b2_light = gameFsmInstance.led[1];
+    b3_light = gameFsmInstance.led[2];
+
 }

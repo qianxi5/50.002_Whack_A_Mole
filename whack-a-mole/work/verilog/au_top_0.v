@@ -19,7 +19,8 @@ module au_top_0 (
     input b3_press,
     output reg b1_light,
     output reg b2_light,
-    output reg b3_light
+    output reg b3_light,
+    input reset
   );
   
   
@@ -100,6 +101,9 @@ module au_top_0 (
     rst = M_reset_cond_out;
     usb_tx = usb_rx;
     led = 8'h00;
+    if (reset) begin
+      rst = 1'h1;
+    end
     io_seg = M_gameFsmInstance_io_seg;
     io_sel = M_gameFsmInstance_io_sel;
     M_b1_press_cond_in = b1_press;
@@ -108,14 +112,14 @@ module au_top_0 (
     M_buttondetector1_in = M_b1_press_cond_out;
     M_buttondetector2_in = M_b2_press_cond_out;
     M_buttondetector3_in = M_b3_press_cond_out;
-    b1_light = M_b1_press_cond_out;
-    b2_light = M_b2_press_cond_out;
-    b3_light = M_b3_press_cond_out;
-    M_gameFsmInstance_b1_press = M_b1_press_cond_out;
-    M_gameFsmInstance_b2_press = M_b2_press_cond_out;
-    M_gameFsmInstance_b3_press = M_b3_press_cond_out;
+    M_gameFsmInstance_b1_press = M_buttondetector1_out;
+    M_gameFsmInstance_b2_press = M_buttondetector2_out;
+    M_gameFsmInstance_b3_press = M_buttondetector3_out;
     M_gameFsmInstance_io_dip[0+0+0-:1] = io_dip[0+0+0-:1];
     M_gameFsmInstance_io_dip[0+1+0-:1] = io_dip[0+1+0-:1];
     M_gameFsmInstance_io_dip[0+2+0-:1] = io_dip[0+2+0-:1];
+    b1_light = M_gameFsmInstance_led[0+0-:1];
+    b2_light = M_gameFsmInstance_led[1+0-:1];
+    b3_light = M_gameFsmInstance_led[2+0-:1];
   end
 endmodule

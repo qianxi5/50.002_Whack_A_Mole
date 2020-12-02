@@ -18,12 +18,6 @@ module gamefsm_1 (
   
   
   
-  reg [3:0] stage_count;
-  
-  reg [15:0] a;
-  
-  reg [15:0] alu;
-  
   reg [15:0] user_input;
   
   wire [16-1:0] M_alumod_alu;
@@ -53,8 +47,9 @@ module gamefsm_1 (
   localparam WAIT_state = 4'd5;
   localparam CALCULATE_DIGIT_state = 4'd6;
   localparam CALCULATE_DIGIT_INI_state = 4'd7;
-  localparam CALCULATE_DIGIT_2_state = 4'd8;
-  localparam CALCULATE_SCORE_META_state = 4'd9;
+  localparam CALCULATE_SCORE_1_state = 4'd8;
+  localparam CALCULATE_SCORE_2_state = 4'd9;
+  localparam CALCULATE_SCORE_3_state = 4'd10;
   
   reg [3:0] M_state_d, M_state_q = INIT_state;
   reg [15:0] M_store_presses_d, M_store_presses_q = 1'h0;
@@ -92,11 +87,11 @@ module gamefsm_1 (
     M_store_test_cases_d = M_store_test_cases_q;
     M_first_digit_d = M_first_digit_q;
     
+    led = 1'h0;
     io_seg = ~M_seg_seg;
     io_sel = ~M_seg_sel;
     M_seg_values = {M_second_digit_q, M_first_digit_q};
     M_alumod_a = M_store_test_cases_q;
-    led = 1'h0;
     user_input[3+12-:13] = 1'h0;
     user_input[0+0-:1] = b1_press;
     user_input[1+0-:1] = b2_press;
@@ -154,11 +149,8 @@ module gamefsm_1 (
         end
         M_state_d = SHOW_SCORE_state;
       end
-      CALCULATE_SCORE_META_state: begin
-        M_alumod_a = M_button_presses_before_timer_q;
-        M_alumod_b = masked_test_cases;
-        M_alumod_alufn = 17'h1adba;
-        if (M_alumod_alu == 1'h1 && M_button_presses_before_timer_q[2+0-:1] == masked_test_cases[2+0-:1] && M_button_presses_before_timer_q[1+0-:1] == masked_test_cases[1+0-:1] && M_button_presses_before_timer_q[0+0-:1] == masked_test_cases[0+0-:1] && M_score_q == 1'h0 && (masked_test_cases[2+0-:1] != 1'h0 || masked_test_cases[1+0-:1] != 1'h0 || masked_test_cases[0+0-:1] != 1'h0)) begin
+      CALCULATE_SCORE_3_state: begin
+        if (M_button_presses_before_timer_q[2+0-:1] == masked_test_cases[2+0-:1] && M_button_presses_before_timer_q[1+0-:1] == masked_test_cases[1+0-:1] && M_button_presses_before_timer_q[0+0-:1] == masked_test_cases[0+0-:1] && M_score_q == 1'h0 && (masked_test_cases[2+0-:1] != 1'h0 || masked_test_cases[1+0-:1] != 1'h0 || masked_test_cases[0+0-:1] != 1'h0)) begin
           M_score_d = M_score_q + 1'h1;
         end
         M_button_presses_before_timer_d = 1'h0;
@@ -166,33 +158,24 @@ module gamefsm_1 (
       end
       CALCULATE_SCORE_state: begin
         M_score_d = 1'h0;
-        M_state_d = CALCULATE_SCORE_META_state;
+        M_state_d = CALCULATE_SCORE_3_state;
       end
       CALCULATE_DIGIT_INI_state: begin
-        M_alumod_a = M_score_q;
-        M_alumod_b = 16'h0000;
-        M_alumod_alufn = 17'h1ae1e;
-        M_score_d = 1'h0;
-        M_state_d = CALCULATE_DIGIT_2_state;
-      end
-      CALCULATE_DIGIT_2_state: begin
-        if (M_alumod_alu != 1'h1) begin
-          M_alumod_a = M_first_digit_q;
-          M_alumod_b = 1'h1;
-          M_alumod_alufn = 1'h0;
-          M_first_digit_d = M_alumod_alu;
+        if (M_score_q > 1'h0) begin
+          M_first_digit_d = M_first_digit_q + 1'h1;
         end
+        M_score_d = 1'h0;
         M_state_d = CALCULATE_DIGIT_state;
       end
       CHECK_CORRECT_PRESS_state: begin
         if (M_second_digit_q == 4'h8) begin
           M_state_d = WAIT_state;
         end
-        if (M_second_digit_q >= 4'ha) begin
-          M_second_digit_d = 1'h0;
-        end
         if (M_stateCOUNT_inc_state == 1'h1) begin
           M_state_d = CALCULATE_SCORE_state;
+        end
+        if (M_second_digit_q >= 4'ha) begin
+          M_second_digit_d = 1'h0;
         end
       end
       WAIT_state: begin

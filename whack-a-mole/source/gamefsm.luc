@@ -1,3 +1,6 @@
+/*learning points:
+  * 1. read/write value to each dff in 1 clock cycle, but NOT BOTH in same clock cycle
+   */
 module gamefsm (
     input clk,  // clock
     input rst, // reset
@@ -7,6 +10,7 @@ module gamefsm (
     input b1_press,
     input b2_press,
     input b3_press,    
+    //output io_led[3][8],
     input io_dip[1][3],
     output led[3]
     //output b1_light,
@@ -15,9 +19,9 @@ module gamefsm (
     ) {
   //alumod.a is always test case
   //alumod.b is  always user_input
-  sig stage_count[4];
-  sig a[16];
-  sig alu[16];
+//  sig stage_count[4]; //using score dff to check stage count 
+//  sig a[16];
+//  sig alu[16];
   sig user_input[16];  
   //sig alufn[6];    
   alu alumod;
@@ -26,24 +30,22 @@ module gamefsm (
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
-    fsm state = {INIT, IDLE, CHECK_CORRECT_PRESS, SHOW_SCORE, CALCULATE_SCORE, WAIT, CALCULATE_DIGIT,CALCULATE_DIGIT_INI,CALCULATE_DIGIT_UPDATE, CALCULATE_SCORE_META};
+    fsm state = {INIT, IDLE, CHECK_CORRECT_PRESS, SHOW_SCORE, CALCULATE_SCORE, WAIT, CALCULATE_DIGIT,CALCULATE_DIGIT_INI,CALCULATE_SCORE_1,CALCULATE_SCORE_2,CALCULATE_SCORE_3};
     //in the respective CASE, fit in masked value for compareeq
-
-    //MEMORY UNIT: there's no point creating a separate memory unit luc source file since it is very small, and no logic for retrieving data. 
+    //there's no point creating a separate memory unit luc source file since it is very small, and no logic for retrieving data. 
     dff store_presses[16];      //delay flip flops used for storing values of a,b,store_alufn
     dff store_test_cases[16];
     dff temp_register[16];
-    dff score[16]; //add score, improved processing with more stages, since one state(one clock cycle) can only read or write dff but not both
-    
-    //solves metastability. see spaghetti conditions in CALCULATE_SCORE_META
+    dff score[16]; //for each stage add, add the time left 
     dff button_presses_before_timer[3];
-
-    //i/o dffs for 7-segment
-    dff first_digit[4]; 
+    dff first_digit[4];
     dff second_digit[4];
-
-    dff times[16]; //unused, error catching/cheating catching doesn't work
+    dff times[16];
     .rst(rst){
+  
+     //  dff store_a[3];   // a is test case input, to retrieve from memory unit
+     // dff store_b[3];   //b is user input 
+     // dff store_alufn[6]; //do i even need to store alufn into mem unit? i think not
       stateCounter stateCOUNT;
       multi_seven_seg seg;  //using module multi_seven_seg
 
@@ -51,26 +53,22 @@ module gamefsm (
   }
 
   always {
-    
+    led = 0;
     io_seg = ~seg.seg;
     io_sel = ~seg.sel;
     seg.values = {second_digit.q,first_digit.q}; //initial score
     alumod.a = store_test_cases.q;    
     //a is supplied in each test case, b is user inputs from b1_press, b2_press, b3_press, etc from au_top
-
-    led = 0; //all button LEDS initially 0. signal to au_top
+    //io_led[2]= first_digit.q;
     
-    //io_led[2]= first_digit.q; //use to debug if output to first digit on 7-seg is correct
     
-    user_input[15:3] = 0; //last 13 bits of user input always 0, first 3 bits always equals to respective button signals from au_top
+    user_input[15:3] = 0; //last 13 bits of user input always 0
     user_input[0] = b1_press;
     user_input[1] = b2_press;
     user_input[2] = b3_press;
-    
-    if(b1_press ==1){button_presses_before_timer.d[0]=1;} 
+    if(b1_press ==1){button_presses_before_timer.d[0]=1;}
     else if(b2_press ==1){button_presses_before_timer.d[1]=1;}
     else if(b3_press ==1){button_presses_before_timer.d[2]=1;}
-
     store_presses.d = user_input;
     alumod.alufn = 6b0;
     alumod.a = 0;          //put the test case into the alu input a      
@@ -92,9 +90,11 @@ module gamefsm (
         }
       state.SHOW_SCORE:
         //times.d = first_digit.q;
-  //      io_led[0] = second_digit.q; 
-  //      io_led[2] = first_digit.q; 
+        //io_led[0] = second_digit.q; 
+        //io_led[2] = first_digit.q; 
         seg.values={second_digit.q,first_digit.q}; 
+        
+        //error catching, clock cycles seem to "skip and increase wantedly by multiple times when test case is 110.
         if(store_test_cases.q == b110){
         store_test_cases.d = store_test_cases.q + 1;
         // state.d = state.INIT;
@@ -102,7 +102,7 @@ module gamefsm (
         store_test_cases.d = store_test_cases.q + 1;
           state.d = state.CHECK_CORRECT_PRESS;
           }
-         
+        
       state.CALCULATE_DIGIT:          
         if(first_digit.q >= 10){
                first_digit.d = first_digit.q - 10;
@@ -117,52 +117,44 @@ module gamefsm (
           } 
         state.d = state.SHOW_SCORE;
         
-      state.CALCULATE_SCORE_META: 
-        //on top of checking if the alu output is 1(which means the button presses match the test cases), we also use a 3-bit dff to check for metastability.
-        alumod.a = button_presses_before_timer.q;
-        alumod.b = masked_test_cases;
-        alumod.alufn = 110010; //CMPEQ alufn 
-        
-        //spaghetti: on top of checking alu output, we also check if score is 0 AND proceed if test cases are not 0.
-        if(alumod.alu == 1 && button_presses_before_timer.q[2] == masked_test_cases[2] && button_presses_before_timer.q[1] == masked_test_cases[1] 
-        && button_presses_before_timer.q[0] == masked_test_cases[0] && score.q==0 && ( masked_test_cases[2]!=0||masked_test_cases[1]!=0||masked_test_cases[0]!=0)){
+      state.CALCULATE_SCORE_3: 
+        if(button_presses_before_timer.q[2] == masked_test_cases[2] && button_presses_before_timer.q[1] == masked_test_cases[1] 
+        && button_presses_before_timer.q[0] == masked_test_cases[0]&&score.q==0 &&( masked_test_cases[2]!=0||masked_test_cases[1]!=0||masked_test_cases[0]!=0)){
          score.d = score.q + 1;
-          }
-        button_presses_before_timer.d = 0; //resets timer for that stage. every stage has a timer
+        }
+        button_presses_before_timer.d = 0; 
         state.d = state.CALCULATE_DIGIT_INI;
       state.CALCULATE_SCORE:                     
         score.d = 0;
-        state.d = state.CALCULATE_SCORE_META;  
+        state.d = state.CALCULATE_SCORE_3;  
     state.CALCULATE_DIGIT_INI:
-    //using compare less than(CMPLTE) to check if score is larger than 0. if score.q > 0, alu output != 1, not in idle state, continue adding score
-      alumod.a = score.q;
-      alumod.b = 16b0;
-      alumod.alufn = 110110;
-        score.d = 0;
-        state.d = state.CALCULATE_DIGIT_UPDATE;
-      state.CALCULATE_DIGIT_UPDATE:
-        if(alumod.alu != 1){
-        alumod.a = first_digit.q;
-        alumod.b = 1;
-        alumod.alufn = 000000; //ADD alufn
-        first_digit.d = alumod.alu;
+      if(score.q>0){
+        first_digit.d = first_digit.q + 1;
           }
+        score.d = 0;
         state.d = state.CALCULATE_DIGIT;
     state.CHECK_CORRECT_PRESS: 
-       //display conditions
-        if(second_digit.q == 8){
+      if(second_digit.q == 8){
         state.d = state.WAIT;
           }                        
+       if(stateCOUNT.inc_state==1) {
+                    state.d = state.CALCULATE_SCORE;
+        }
         if(second_digit.q >= 10){
                second_digit.d = 0;
           }
-        if(stateCOUNT.inc_state==1) {
-                 state.d = state.CALCULATE_SCORE;
-        }
+        //cannot feed 2 inputs into the same dff in one state la, split into 2 states
+        /*if(times.q + 1 < first_digit.q){
+          first_digit.d = 8;
+          second_digit.d = 8;
+          state.d = state.WAIT;
+          }*/
+        
     state.WAIT:
          if(stateCOUNT.inc_state==1) {
                     state.d = state.INIT;
         }
+        
     state.IDLE:
       //seg.values={4h0,4h0};
       first_digit.d = 0;

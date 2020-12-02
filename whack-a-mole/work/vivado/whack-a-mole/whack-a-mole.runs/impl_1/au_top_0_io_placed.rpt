@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date                      : Sun Nov 29 19:18:54 2020
+| Date                      : Thu Dec  3 01:54:35 2020
 | Host                      : S0ck3tSlash running 64-bit major release  (build 9200)
 | Command                   : report_io -file au_top_0_io_placed.rpt
 | Design                    : au_top_0
@@ -25,7 +25,7 @@ Table of Contents
 +---------------+
 | Total User IO |
 +---------------+
-|            38 |
+|            39 |
 +---------------+
 
 
@@ -56,7 +56,7 @@ Table of Contents
 | B3         |              | High Range | VCCO_35                      | VCCO        |             |      35 |            |      |                     |                      |    3.30 |            |           |          |      |                  |              |                   |              |
 | B4         |              | High Range | IO_L4P_T0_35                 | User IO     |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | B5         |              | High Range | IO_L2N_T0_AD12N_35           | User IO     |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
-| B6         |              | High Range | IO_L2P_T0_AD12P_35           | User IO     |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
+| B6         | reset        | High Range | IO_L2P_T0_AD12P_35           | INPUT       | LVCMOS33    |      35 |            |      |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | B7         | io_button[3] | High Range | IO_L1P_T0_AD4P_35            | INPUT       | LVCMOS33    |      35 |            |      |                     |                 NONE |         | FIXED      | PULLDOWN  |          |      | NONE             |              |                   |              |
 | B8         |              |            | GND                          | GND         |             |         |            |      |                     |                      |     0.0 |            |           |          |      |                  |              |                   |              |
 | B9         |              | High Range | IO_L3P_T0_DQS_AD1P_15        | User IO     |             |      15 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
