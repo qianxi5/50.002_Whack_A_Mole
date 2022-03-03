@@ -13,3 +13,5 @@ Technical Decisions:
 
 Demo Video
 https://youtu.be/sdvAechiJY8
+
+Poster: https://drive.google.com/file/d/1UuOS87qzjrTP-6CcQXGUguxykgBd-fJC/view?usp=sharing
